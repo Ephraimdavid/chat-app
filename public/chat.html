@@ -2,6 +2,8 @@
 <html>
     <title>Davis</title>
 <head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.png" >
     <link rel="stylesheet" href="/css/styles.min.css">
 </head>
@@ -14,7 +16,7 @@
                     <div class="compose">
                         <form id="message-form">
                             <input type="text" placeholder="Type a message" name="userMessage" required autocomplete="off">
-                            <button>send</button>
+                            <button id='send-message'>send</button>
                         </form>
                         <button id="send-location">append locale</button>
                     </div>
@@ -25,10 +27,9 @@
                 <div class="message">
                     <p>
                         <span class="message__name">{{username}}</span>
-                        <span class="message__meta">{{createdAt}}</span>
+                        <span class="message__meta">{{createdAt}}</span><br />
                     </p>
-                <p> {{message}} </p>  
-
+                <p>{{message}}</p>  
                 </div>
             </script>
 

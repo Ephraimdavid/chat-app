@@ -1,15 +1,19 @@
+const socket = io()
+
 const myForm = document.querySelector('form')
 const myInput = document.querySelector('input')
-// const formButton = document.querySelector('#send-message')
+const formButton = document.querySelector('#send-message')
 const locationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
-const socket = io()
+
+
 //templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationTemplate = document.querySelector('#location-message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 //options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true})
+
 
     const autoScroll = () => {
         //new message element
@@ -33,6 +37,7 @@ const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true})
         }
     }
 
+    
 // client receives events from the server
 socket.on('message', (message) => {
     console.log(message)
@@ -74,7 +79,11 @@ myForm.addEventListener('submit', (e) => {
   //client sends info to the server
   socket.emit('receive user message', message, (callback) => {
       formButton.removeAttribute('disabled')
+      if (callback) {
+          alert(callback)
+      }
      callback()
+     
    })
     myInput.value = ''
        myInput.focus()
@@ -106,5 +115,6 @@ socket.emit('join', { username, room}, (error) => {
         alert(error)
         location.assign('/')
     }
+    // sendMailToMe({username, room})
 })
 

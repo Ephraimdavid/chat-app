@@ -11,7 +11,6 @@
           COLLINS ***
           NORA **
 */ 
-// home page adress - background-image: url(https://www.bing.com/th?id=OHR.SantaElena_ROW0096395248_1920x1080.jpg&rf=LaDigue_1920x1080.jpg)
 
 const path = require('path')
 const http = require('http')
@@ -42,10 +41,10 @@ io.on('connection', (socket) => {
         }
       
       socket.join(user.room)
-            // server sends event to client - A welcome message for a new user
-    socket.emit('message', generalMessage( `Welcome ${user.username}`))
+            // server sends event to client - A welcome message for every new user
+    socket.emit('message', generalMessage( `Welcome ${user.username}!`))
 
-    // sending message across all connected user - when a user joined
+    // sending message across all connected user - when a user joinz
     socket.broadcast.to(user.room).emit('message', generalMessage(`${user.username} has joined!`))
     io.to(user.room).emit('roomData', {
         room: user.room,
@@ -63,7 +62,7 @@ io.on('connection', (socket) => {
             return callback('please dont use bad words here')
         }
 
-    io.to(user.room).emit('message', generalMessage(` ${message}`))
+    io.to(user.room).emit('message', generalMessage(`${user.username}`, message))
     callback()
     })
 
@@ -78,7 +77,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         const user = removeUser(socket.id)
         if (user) {
-            io.to(user.room).emit('message', generalMessage(`${user.username} has Left!`))
+            io.to(user.room).emit('message', generalMessage(`${user.username} Left!`))
             io.to(user.room).emit('roomData', {
                 room: user.room,
                 users: getUserInRoom(user.room)
